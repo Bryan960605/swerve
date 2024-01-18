@@ -27,16 +27,14 @@ public class SwerveModule extends SubsystemBase{
 
     private final CANcoder absoluteEncoder;
     private final CANcoderConfiguration cancoderConfig;
-    private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetDegree;
 
     private double setpointangle;
     private double angle;
 
     public SwerveModule(int driveMotorID, int turningMotorID, boolean driveMotorReversed, boolean turningMotorReversed, 
-                        int absoluteEncoderID, double absoluteEncoderOffsetDegree, boolean absoluteEncoderReversed){
+                        int absoluteEncoderID, double absoluteEncoderOffsetDegree){
         this.absoluteEncoderOffsetDegree = absoluteEncoderOffsetDegree;
-        this.absoluteEncoderReversed = absoluteEncoderReversed;
         absoluteEncoder = new CANcoder(absoluteEncoderID);
         cancoderConfig = new CANcoderConfiguration();
 
@@ -54,12 +52,7 @@ public class SwerveModule extends SubsystemBase{
 
         cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
         cancoderConfig.MagnetSensor.MagnetOffset = absoluteEncoderOffsetDegree;
-        if(absoluteEncoderReversed == true){
-            cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
-        }
-        else{
-            cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        }
+        cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
 
         driveEncoder = driveMotor.getEncoder();
         turningEncoder = turningMotor.getEncoder();

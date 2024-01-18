@@ -27,8 +27,7 @@ public class SwerveSubsystem extends SubsystemBase{
             leftFrontdriveMotorReversed, 
             leftFrontTurningMotorReversed, 
             leftFrontCANCoderID, 
-            leftFrontOffset, 
-            leftFrontAbsoluteEncoderReversed);
+            leftFrontOffset);
 
         rightFrontModule = new SwerveModule(
             rightFrontDriveID,
@@ -36,8 +35,7 @@ public class SwerveSubsystem extends SubsystemBase{
             rightFrontDriveMotorReversed, 
             rightfrontTurningMotorReversed, 
             rightFrontCANCoderID, 
-            rightFrontOffset, 
-            rightFrontAbsoluteEncoderReversed);
+            rightFrontOffset);
 
         leftRearModule = new SwerveModule(
             leftRearDriveID, 
@@ -45,8 +43,7 @@ public class SwerveSubsystem extends SubsystemBase{
             leftRearDriveMotorreversed, 
             leftRearTurningMotorReversed, 
             leftRearCANCoderID, 
-            leftRearOffset, 
-            leftRearAbsoluteEncoderReversed);
+            leftRearOffset);
 
         rightRearModule = new SwerveModule(
             rightRearDriveID, 
@@ -54,8 +51,7 @@ public class SwerveSubsystem extends SubsystemBase{
             rightRearDriveMotorReversed, 
             rightRearTurningMotorReversed, 
             rightRearCANCoderID, 
-            rightRearOffset, 
-            rightRearAbsoluteEncoderReversed);
+            rightRearOffset);
         mOdometry = new SwerveDriveOdometry(
             swerveKinematics, 
             gyro.getRotation2d(), 

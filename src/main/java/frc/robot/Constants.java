@@ -73,11 +73,6 @@ public final class Constants {
     public static final double leftRearOffset = -37.0;
     public static final double rightRearOffset = 104.0;
     
-    public static final boolean leftFrontAbsoluteEncoderReversed = false;
-    public static final boolean rightFrontAbsoluteEncoderReversed = false;
-    public static final boolean leftRearAbsoluteEncoderReversed = false;
-    public static final boolean rightRearAbsoluteEncoderReversed = false;
-    
     public static double joysickValue(double value, double mineOutput){
       if(Math.abs(value) < mineOutput){
         return 0;
