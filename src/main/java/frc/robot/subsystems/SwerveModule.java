@@ -51,7 +51,7 @@ public class SwerveModule extends SubsystemBase{
         turningMotor.burnFlash();
 
         cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
-        cancoderConfig.MagnetSensor.MagnetOffset = absoluteEncoderOffsetDegree;
+        cancoderConfig.MagnetSensor.MagnetOffset = absoluteEncoderOffsetDegree/360;
         cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
 
         driveEncoder = driveMotor.getEncoder();
@@ -74,7 +74,7 @@ public class SwerveModule extends SubsystemBase{
         return driveEncoder.getPosition();
     }
     public double getTurningPosition(){
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        return absoluteEncoder.getAbsolutePosition().getValue()*360;
     }
     public double getTurnintEncoderPosition(){
         return turningEncoder.getPosition();

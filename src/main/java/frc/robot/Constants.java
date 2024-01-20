@@ -68,10 +68,10 @@ public final class Constants {
     public static final boolean rightRearDriveMotorReversed = false;
     public static final boolean rightRearTurningMotorReversed = true;
 
-    public static final double leftFrontOffset = 135.0;
-    public static final double rightFrontOffset = -40.0;
-    public static final double leftRearOffset = -37.0;
-    public static final double rightRearOffset = 104.0;
+    public static final double leftFrontOffset = 227.0;
+    public static final double rightFrontOffset = 53.0;
+    public static final double leftRearOffset = 51.0;
+    public static final double rightRearOffset = 188.0;
     
     public static double joysickValue(double value, double mineOutput){
       if(Math.abs(value) < mineOutput){
