@@ -11,7 +11,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveModuleConstants;
 
@@ -27,14 +26,9 @@ public class SwerveModule extends SubsystemBase{
 
     private final CANcoder absoluteEncoder;
     private final CANcoderConfiguration cancoderConfig;
-    private final double absoluteEncoderOffsetDegree;
-
-    private double setpointangle;
-    private double angle;
 
     public SwerveModule(int driveMotorID, int turningMotorID, boolean driveMotorReversed, boolean turningMotorReversed, 
                         int absoluteEncoderID, double absoluteEncoderOffsetDegree){
-        this.absoluteEncoderOffsetDegree = absoluteEncoderOffsetDegree;
         absoluteEncoder = new CANcoder(absoluteEncoderID);
         cancoderConfig = new CANcoderConfiguration();
 
@@ -56,11 +50,6 @@ public class SwerveModule extends SubsystemBase{
 
         driveEncoder = driveMotor.getEncoder();
         turningEncoder = turningMotor.getEncoder();
-        
-        driveEncoder.setPositionConversionFactor(SwerveModuleConstants.driveEncoderRot2Meter);
-        driveEncoder.setVelocityConversionFactor(SwerveModuleConstants.driveEncoderRPM2MeterPerSec);
-        turningEncoder.setPositionConversionFactor(SwerveModuleConstants.turningEncoderRot2Rad);
-        turningEncoder.setVelocityConversionFactor(SwerveModuleConstants.turningEncoderRPM2RadPerSec);
 
         turningPIDController = new PIDController(SwerveModuleConstants.turningMotorkP, 0, 0);
         turningPIDController.enableContinuousInput(-180, 180);
@@ -68,28 +57,25 @@ public class SwerveModule extends SubsystemBase{
         resetEncoders();
     }
 
-
-   
     public double getDrivePosition(){
-        return driveEncoder.getPosition();
+        return driveEncoder.getPosition() * SwerveModuleConstants.driveEncoderRot2Meter;
     }
     public double getTurningPosition(){
         return absoluteEncoder.getAbsolutePosition().getValue()*360;
     }
     public double getTurnintEncoderPosition(){
-        return turningEncoder.getPosition();
+        return turningEncoder.getPosition() * SwerveModuleConstants.turningEncoderRot2Rad;
     }
     public double getDriveVelocity(){
-        return driveEncoder.getVelocity();
+        return driveEncoder.getVelocity() * SwerveModuleConstants.driveEncoderRPM2MeterPerSec;
     }
     public double getTurningVelocity(){
-        return turningEncoder.getVelocity();
+        return turningEncoder.getVelocity() * SwerveModuleConstants.turningEncoderRPM2RadPerSec;
     }
     public void resetEncoders(){
         driveEncoder.setPosition(0);
         turningEncoder.setPosition(0);
         absoluteEncoder.getConfigurator().apply(cancoderConfig);
-
     }
     public SwerveModuleState getState(){
         return new SwerveModuleState(getDriveVelocity(), Rotation2d.fromDegrees(getTurningPosition()));
@@ -102,14 +88,9 @@ public class SwerveModule extends SubsystemBase{
         state = SwerveModuleState.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond);
         turningMotor.set(turningPIDController.calculate(getState().angle.getDegrees(),state.angle.getDegrees()));
-        setpointangle = state.angle.getDegrees();
-        angle = getState().angle.getDegrees();
     }
 
 
     @Override
-    public void periodic(){
-        SmartDashboard.putNumber("angle", angle);
-        SmartDashboard.putNumber("setpoint", setpointangle);
-    }
+    public void periodic(){}
 }

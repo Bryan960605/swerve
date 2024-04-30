@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.MountPoseConfigs;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import com.ctre.phoenix6.configs.Pigeon2Configurator;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -10,9 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.RobotContainer.*;
 
 import static frc.robot.Constants.SwerveConstants.*;
 
@@ -61,6 +58,9 @@ public class SwerveSubsystem extends SubsystemBase{
             gyro.getRotation2d(), 
             getModulePosition());
     }
+    public void resetGyro(){
+        gyro.reset();
+    }
     public SwerveModulePosition[] getModulePosition(){
         return new SwerveModulePosition[]{
             leftFrontModule.getPosition(),
@@ -103,13 +103,6 @@ public class SwerveSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         mOdometry.update(gyro.getRotation2d(), getModulePosition());
-        SmartDashboard.putNumber("xSpeed", baseJoystick.getRawAxis(1));
-        SmartDashboard.putNumber("ySpeed", baseJoystick.getRawAxis(0));
-        SmartDashboard.putNumber("zSpeed", baseJoystick.getRawAxis(4));
-        SmartDashboard.putNumber("leftFront", leftFrontModule.getTurningPosition());
-        SmartDashboard.putNumber("leftRear", leftRearModule.getTurningPosition());
-        SmartDashboard.putNumber("rightFront", rightFrontModule.getTurningPosition());
-        SmartDashboard.putNumber("rigthRear", rightRearModule.getTurningPosition());
     }
   
 }

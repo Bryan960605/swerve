@@ -3,14 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import frc.robot.commands.AutoCommand;
 import frc.robot.commands.ManualDrive;
 import frc.robot.subsystems.SwerveSubsystem;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,11 +22,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem _swervesubsystem = new SwerveSubsystem();
-  public ManualDrive manualDrive = new ManualDrive(_swervesubsystem);
-  public AutoCommand autocommand = new AutoCommand(_swervesubsystem);
-  public static final XboxController baseJoystick = new XboxController(0);
-  private SendableChooser<Command> m_Chooser = new SendableChooser<>();
+  private final SwerveSubsystem m_swervesubsystem = new SwerveSubsystem();
+  public static final CommandXboxController baseJoystick = new CommandXboxController(0);
   XboxController joy = new XboxController(0);
 
   public RobotContainer() {
@@ -32,8 +31,21 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    m_Chooser.setDefaultOption("autoCommand", autocommand);
-    SmartDashboard.putData(m_Chooser);
+    /* ============
+     *    Driver 
+     * ============
+    */
+    /* Manual Drive */
+    DoubleSupplier xSpeedFunc = () -> baseJoystick.getRawAxis(1);
+    DoubleSupplier ySpeedFunc = () -> baseJoystick.getRawAxis(0);
+    DoubleSupplier zSppedFunc = () -> baseJoystick.getRawAxis(4);
+    BooleanSupplier isSlowModeFunc = () -> baseJoystick.getHID().getRightTriggerAxis() > 0.4;
+    m_swervesubsystem.setDefaultCommand(new ManualDrive(m_swervesubsystem, xSpeedFunc, ySpeedFunc, zSppedFunc, isSlowModeFunc));
+    /* Reset Gyro */
+    baseJoystick.b().whileTrue(
+      Commands.runOnce(()->{
+        m_swervesubsystem.resetGyro();
+    }));
   }
 
   /**
@@ -43,6 +55,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_Chooser.getSelected();
+    return null;
   }
 }
