@@ -9,7 +9,6 @@ import frc.robot.subsystems.SwerveSubsystem;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -24,7 +23,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem m_swervesubsystem = new SwerveSubsystem();
   public static final CommandXboxController baseJoystick = new CommandXboxController(0);
-  XboxController joy = new XboxController(0);
 
   public RobotContainer() {
     configureBindings();
