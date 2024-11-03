@@ -49,7 +49,7 @@ public class ManualDrive extends Command {
   public void execute() {
     xSpeed = xFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
     ySpeed = yFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
-    zSpeed = zFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
+    zSpeed = zFunc.getAsDouble() * SwerveModuleConstants.maxAngularVelocity;
 
     xSpeed = MathUtil.applyDeadband(xSpeed, 0.1);
     ySpeed = MathUtil.applyDeadband(ySpeed, 0.1);

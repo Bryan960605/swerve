@@ -48,22 +48,29 @@ public final class Constants {
     public static final double drivingMotorKI = 0;
     public static final double drivingMotorKD = 0;
     public static final double maxDriveMotorSpeed = 4.0;
+    public static final double maxAngularVelocity = 3.0 * Math.PI;
   }
-  
-  public static final class SwerveConstants{
-    public static final int leftFrontDriveID = 7;
-    public static final int leftFrontTurningID = 8;
-    public static final int rightFrontDriveID = 1;
-    public static final int rightFrontTurningID = 2;  
-    public static final int leftRearDriveID = 5;
-    public static final int leftRearTurningID = 6;
-    public static final int rightRearDriveID = 3;
-    public static final int rightRearTurningID = 4;
 
-    public static final int leftFrontCANCoderID = 14;
-    public static final int rightFrontCANCoderID = 11;
-    public static final int leftRearCANCoderID = 13;
-    public static final int rightRearCANCoderID = 12;
+  public static final class SwerveConstants{
+    public static final int leftFrontDriveID = 29;
+    public static final int rightFrontDriveID = 19;
+    public static final int leftRearDriveID = 15;
+    public static final int rightRearDriveID = 16;
+
+    public static final int leftFrontTurningID = 21;
+    public static final int rightFrontTurningID = 17;
+    public static final int leftRearTurningID = 22;
+    public static final int rightRearTurningID = 26;
+
+    public static final int leftFrontCANCoderID = 43;
+    public static final int rightFrontCANCoderID = 42;
+    public static final int leftRearCANCoderID = 44;
+    public static final int rightRearCANCoderID = 41;
+
+    public static final double leftFrontOffset = 0.4052734375;
+    public static final double rightFrontOffset = 0.141845703125;
+    public static final double leftRearOffset = -0.11767578125;
+    public static final double rightRearOffset = 0.174072265625;
 
     public static final boolean leftFrontdriveMotorReversed = true;
     public static final boolean leftFrontTurningMotorReversed = true;
@@ -73,11 +80,6 @@ public final class Constants {
     public static final boolean leftRearTurningMotorReversed = true;
     public static final boolean rightRearDriveMotorReversed = false;
     public static final boolean rightRearTurningMotorReversed = true;
-
-    public static final double leftFrontOffset = 227.0;
-    public static final double rightFrontOffset = 53.0;
-    public static final double leftRearOffset = 51.0;
-    public static final double rightRearOffset = 188.0;
     
     public static double joysickValue(double value, double mineOutput){
       if(Math.abs(value) < mineOutput){
