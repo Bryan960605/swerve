@@ -42,8 +42,14 @@ public final class Constants {
     public static final double driveEncoderRPM2MeterPerSec = driveEncoderRot2Meter/60.0;
     public static final double turningEncoderRPM2RadPerSec = turningEncoderRot2Rad/60.0;
     public static final double turningMotorkP = 0.005;
+    public static final double turningMotorKI = 0;
+    public static final double turningMotorKD = 0;
+    public static final double drivingMotorKP = 0;
+    public static final double drivingMotorKI = 0;
+    public static final double drivingMotorKD = 0;
     public static final double maxDriveMotorSpeed = 4.0;
   }
+  
   public static final class SwerveConstants{
     public static final int leftFrontDriveID = 7;
     public static final int leftFrontTurningID = 8;

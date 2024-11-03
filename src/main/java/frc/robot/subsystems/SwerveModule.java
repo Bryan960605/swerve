@@ -23,6 +23,7 @@ public class SwerveModule extends SubsystemBase{
     private final RelativeEncoder turningEncoder;
 
     private final PIDController turningPIDController;
+    private final PIDController drivingPIDController;
 
     private final CANcoder absoluteEncoder;
     private final CANcoderConfiguration cancoderConfig;
@@ -51,8 +52,10 @@ public class SwerveModule extends SubsystemBase{
         driveEncoder = driveMotor.getEncoder();
         turningEncoder = turningMotor.getEncoder();
 
-        turningPIDController = new PIDController(SwerveModuleConstants.turningMotorkP, 0, 0);
+        turningPIDController = new PIDController(SwerveModuleConstants.turningMotorkP, SwerveModuleConstants.turningMotorKI, SwerveModuleConstants.turningMotorKD);
         turningPIDController.enableContinuousInput(-180, 180);
+
+        drivingPIDController = new PIDController(SwerveModuleConstants.drivingMotorKP, SwerveModuleConstants.drivingMotorKI, SwerveModuleConstants.drivingMotorKD);
         
         resetEncoders();
     }
@@ -86,7 +89,8 @@ public class SwerveModule extends SubsystemBase{
      
     public void setDesiredState(SwerveModuleState state){
         state = SwerveModuleState.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond);
+        double drivingOutput = state.speedMetersPerSecond / SwerveModuleConstants.maxDriveMotorSpeed + drivingPIDController.calculate(getState().speedMetersPerSecond, state.speedMetersPerSecond);
+        driveMotor.set(drivingOutput);
         turningMotor.set(turningPIDController.calculate(getState().angle.getDegrees(),state.angle.getDegrees()));
     }
 

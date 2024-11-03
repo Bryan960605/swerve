@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class ManualDrive extends Command {
@@ -46,9 +47,9 @@ public class ManualDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    xSpeed = xFunc.getAsDouble();
-    ySpeed = yFunc.getAsDouble();
-    zSpeed = zFunc.getAsDouble();
+    xSpeed = xFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
+    ySpeed = yFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
+    zSpeed = zFunc.getAsDouble() * SwerveModuleConstants.maxDriveMotorSpeed;
 
     xSpeed = MathUtil.applyDeadband(xSpeed, 0.1);
     ySpeed = MathUtil.applyDeadband(ySpeed, 0.1);
